@@ -127,8 +127,8 @@ export const updateReport = async (req: Request, res: Response) => {
     }
 };
 
-export const findAllReport = async (req: Request, res: Response) => {
-    const { code, description, status } = req.query;
+export const findAllReportPublic = async (req: Request, res: Response) => {
+    const { code, description, status, addressReport, cityReport, UFReport, countryReport } = req.query;
 
     const filters: any = {};
 
@@ -147,6 +147,30 @@ export const findAllReport = async (req: Request, res: Response) => {
     if (status) {
         filters.status = {
             equals: String(status),
+        };
+    }
+
+    if (addressReport) {
+        filters.addressReport = {
+            contains: String(addressReport),
+        };
+    }
+
+    if (cityReport) {
+        filters.cityReport = {
+            contains: String(cityReport),
+        };
+    }
+
+    if (UFReport) {
+        filters.UFReport = {
+            contains: String(UFReport),
+        };
+    }
+
+    if (countryReport) {
+        filters.countryReport = {
+            contains: String(countryReport),
         };
     }
 
@@ -169,6 +193,89 @@ export const findAllReport = async (req: Request, res: Response) => {
                 UFReport: true,
                 countryReport: true
             },
+        });
+
+        res.json({
+            count,
+            data: reports,
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao buscar denúncias." });
+    }
+};
+
+export const findAllReport = async (req: Request, res: Response) => {
+    const { code, description, status, userId, reporterName, CPF, addressReport, cityReport, UFReport, countryReport } = req.query;
+
+    const filters: any = {};
+
+    if (code) {
+        filters.code = {
+            contains: String(code),
+        };
+    }
+
+    if (description) {
+        filters.description = {
+            contains: String(description),
+        };
+    }
+
+    if (status) {
+        filters.status = {
+            equals: String(status),
+        };
+    }
+
+    if (userId) {
+        filters.userId = {
+            equals: Number(userId),
+        };
+    }
+
+    if (reporterName) {
+        filters.reporterName = {
+            contains: String(reporterName),
+        };
+    }
+
+    if (CPF) {
+        filters.CPF = {
+            contains: String(CPF),
+        };
+    }
+
+    if (addressReport) {
+        filters.addressReport = {
+            contains: String(addressReport),
+        };
+    }
+
+    if (cityReport) {
+        filters.cityReport = {
+            contains: String(cityReport),
+        };
+    }
+
+    if (UFReport) {
+        filters.UFReport = {
+            contains: String(UFReport),
+        };
+    }
+
+    if (countryReport) {
+        filters.countryReport = {
+            contains: String(countryReport),
+        };
+    }
+
+    try {
+        const count = await prismaCilent.report.count({
+            where: filters,
+        });
+
+        const reports = await prismaCilent.report.findMany({
+            where: filters
         });
 
         res.json({
