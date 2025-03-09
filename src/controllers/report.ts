@@ -62,7 +62,21 @@ export const deleteReport = async (req: Request, res: Response) => {
 };
 
 export const updateReport = async (req: Request, res: Response) => {
-    const { reportId, description, status, reporterName, contactInfo, userId } = req.body;
+    const { 
+        reportId, 
+        description, 
+        addressReport, 
+        cityReport, 
+        UFReport, 
+        countryReport, 
+        status, 
+        reporterName, 
+        userId, 
+        CPF, 
+        telephone, 
+        address, 
+        email 
+    } = req.body;
 
     try {
         const existingReport = await prismaCilent.report.findUnique({
@@ -91,7 +105,20 @@ export const updateReport = async (req: Request, res: Response) => {
 
         const updatedReport = await prismaCilent.report.update({
             where: { id: reportId },
-            data: { description, status, reporterName, contactInfo, userId },
+            data: { 
+                description, 
+                addressReport, 
+                cityReport, 
+                UFReport, 
+                countryReport, 
+                status, 
+                reporterName, 
+                userId, 
+                CPF, 
+                telephone, 
+                address, 
+                email 
+             },
         });
 
         res.json(updatedReport);
@@ -137,6 +164,10 @@ export const findAllReport = async (req: Request, res: Response) => {
                 createdAt: true,
                 updatedAt: true,
                 occurrence: true,
+                addressReport: true, 
+                cityReport: true,
+                UFReport: true,
+                countryReport: true
             },
         });
 

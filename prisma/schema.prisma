@@ -38,22 +38,31 @@ model Report {
   user      User?      @relation(fields: [userId], references: [id])
   
   reporterName  String? 
-  contactInfo   String?
+  CPF           String?
+  telephone     String?
+  address       String?
+  email         String?
+
+  addressReport String?
+  cityReport    String?
+  UFReport      String?
+  countryReport String?
 
   occurrence    Occurrence?
-
+ 
   @@map("Reports")
 }
 
 model Occurrence {
   id          Int          @id @default(autoincrement())
-  reportId    Int          @unique  
+  reportId    Int          @unique         
   userId      Int
-  report      Report       @relation(fields: [reportId], references: [id])
+  report      Report      @relation(fields: [reportId], references: [id])
   user        User         @relation(fields: [userId], references: [id])
   description String
   status      OccurrenceStatus @default(OPEN)
   createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 
   @@map("Occurrences")
 }
