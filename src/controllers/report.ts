@@ -51,7 +51,7 @@ export const deleteReport = async (req: Request, res: Response) => {
             where: { id: reportId },
         });
 
-        res.json(deletedReport);
+        res.status(204).json(deletedReport);
     } catch (error) {
         if (error instanceof NotFoundException) {
             res.status(404).json({ message: error.message, errorCode: error.errorCode });
