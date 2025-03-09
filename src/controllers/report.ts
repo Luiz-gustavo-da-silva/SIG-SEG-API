@@ -62,7 +62,7 @@ export const deleteReport = async (req: Request, res: Response) => {
 };
 
 export const updateReport = async (req: Request, res: Response) => {
-    const { reportId, description, status } = req.body;
+    const { reportId, description, status, reporterName, contactInfo, userId } = req.body;
 
     try {
         const existingReport = await prismaCilent.report.findUnique({
@@ -76,9 +76,22 @@ export const updateReport = async (req: Request, res: Response) => {
             );
         }
 
+        if(userId != null){
+            const user = await prismaCilent.user.findUnique({
+                where: { id: userId },
+            });
+
+            if (!user) {
+                throw new NotFoundException(
+                    "Usuário não encontrado",
+                    ErrorCode.USER_NOT_FOUND
+                );
+            }
+        }
+
         const updatedReport = await prismaCilent.report.update({
             where: { id: reportId },
-            data: { description, status },
+            data: { description, status, reporterName, contactInfo, userId },
         });
 
         res.json(updatedReport);
