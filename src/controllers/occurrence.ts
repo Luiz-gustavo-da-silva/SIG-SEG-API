@@ -151,7 +151,7 @@ export const findAllOccurrence = async (req: Request, res: Response) => {
 
     if (status) {
         filters.status = {
-            contains: String(status),
+            equals: String(status),
         };
     }
 
@@ -174,11 +174,21 @@ export const findAllOccurrence = async (req: Request, res: Response) => {
     }
 
     const count = await prismaCilent.occurrence.count({
-        where: filters,
+        where: filters
     });
 
     const occurrences = await prismaCilent.occurrence.findMany({
         where: filters,
+        select: {
+            id: true,
+            description: true,
+			status: true,
+			createdAt: true,
+			updatedAt: true,
+            title: true,
+            report: true,
+            user: true,
+        }
     });
 
     res.json({
