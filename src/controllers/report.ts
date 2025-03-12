@@ -75,7 +75,8 @@ export const updateReport = async (req: Request, res: Response) => {
         CPF, 
         telephone, 
         address, 
-        email 
+        email,
+        titleReport 
     } = req.body;
 
     try {
@@ -117,11 +118,12 @@ export const updateReport = async (req: Request, res: Response) => {
                 CPF, 
                 telephone, 
                 address, 
-                email 
+                email,
+                titleReport 
              },
         });
 
-        res.json(updatedReport);
+        res.status(200).json(updatedReport);
     } catch (error) {
         res.status(500).json({ message: "Erro ao atualizar a denúncia" });
     }
@@ -130,6 +132,8 @@ export const updateReport = async (req: Request, res: Response) => {
 export const findAllReportPublic = async (req: Request, res: Response) => {
     const { code, description, status, addressReport, cityReport, UFReport, countryReport } = req.query;
 
+    console.log(req.query);
+    /*add titulo da denuncia*/
     const filters: any = {};
 
     if (code) {
@@ -201,6 +205,33 @@ export const findAllReportPublic = async (req: Request, res: Response) => {
         });
     } catch (error) {
         res.status(500).json({ error: "Erro ao buscar denúncias." });
+    }
+};
+
+export const findReport = async (req: Request, res: Response) => {
+    const code = req.params.code;
+    
+    try {
+        const report = await prismaCilent.report.findUnique({
+            where: { code: String(code) },
+            select: {
+                code: true,
+                status: true,
+                description: true,
+                createdAt: true,
+                updatedAt: true,
+                occurrence: true,
+                addressReport: true, 
+                cityReport: true,
+                UFReport: true,
+                countryReport: true,
+                titleReport: true
+            },
+        });
+       
+        res.status(200).json(report);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao buscar denúncia." });
     }
 };
 

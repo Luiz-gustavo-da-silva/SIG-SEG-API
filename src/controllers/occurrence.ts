@@ -85,7 +85,7 @@ export const deleteOccurrence = async (req: Request, res: Response) => {
 };
 
 export const updateOccurrence = async (req: Request, res: Response) => {
-    const { occurrenceId, description, status, userId, reportId } = req.body;
+    const { occurrenceId, description, status, userId, reportId, title } = req.body;
 
     try {
         const existingOccurrence = await prismaCilent.occurrence.findUnique({
@@ -127,18 +127,19 @@ export const updateOccurrence = async (req: Request, res: Response) => {
                 description,
                 status,
                 userId,
-                reportId
+                reportId,
+                title
             },
         });
 
-        res.json(updatedOccurrence);
+        res.status(200).json(updatedOccurrence);
     } catch (error) {
         res.status(500).json({ message: "Erro interno no servidor" });
     }
 };
 
 export const findAllOccurrence = async (req: Request, res: Response) => {
-    const { description, status, reportId, userId  } = req.query;
+    const { description, status, reportId, userId, title  } = req.query;
 
     const filters: any = {};
 
@@ -166,12 +167,64 @@ export const findAllOccurrence = async (req: Request, res: Response) => {
         };
     }
 
+    if(title){
+        filters.title = {
+            contains: String(title),
+        };
+    }
+
     const count = await prismaCilent.occurrence.count({
         where: filters,
     });
 
     const occurrences = await prismaCilent.occurrence.findMany({
         where: filters,
+    });
+
+    res.json({
+        count, 
+        occurrences
+    });
+}
+
+export const findAllOccurrencePublic = async (req: Request, res: Response) => {
+    const { description, status, title } = req.query;
+
+    console.log(req.query);
+
+    const filters: any = {};
+
+    if (description) {
+        filters.description = {
+            contains: String(description),
+        };
+    }
+
+    if (status) {
+        filters.status = {
+            equals: String(status),
+        };
+    }
+
+    if (title) {
+        filters.title = {
+            contains: String(title),
+        };
+    }
+
+    const count = await prismaCilent.occurrence.count({
+        where: filters,
+    });
+
+    const occurrences = await prismaCilent.occurrence.findMany({
+        where: filters,
+        select: {
+			description: true,
+			status: true,
+			createdAt: true,
+			updatedAt: true,
+            title: true
+        },
     });
 
     res.json({

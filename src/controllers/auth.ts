@@ -20,9 +20,9 @@ export const signup = async (
 
   if (user) {
     new BadRequestsException(
-      "User already exists!",
+      "Usuário já existe!",
       ErrorCode.USER_ALREADY_EXISTS
-    ); 
+    );
   }
 
   user = await prismaCilent.user.create({
