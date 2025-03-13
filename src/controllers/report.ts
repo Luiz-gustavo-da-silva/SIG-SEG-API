@@ -142,8 +142,6 @@ export const findAllReportPublic = async (req: Request, res: Response) => {
     countryReport,
   } = req.query;
 
-  console.log(req.query);
-  /*add titulo da denuncia*/
   const filters: any = {};
 
   if (code) {
@@ -247,25 +245,18 @@ export const findReport = async (req: Request, res: Response) => {
 
 export const findAllReport = async (req: Request, res: Response) => {
   const {
-    code,
     description,
     status,
-    userId,
     reporterName,
     CPF,
     addressReport,
     cityReport,
     UFReport,
     countryReport,
+    titleReport
   } = req.query;
 
   const filters: any = {};
-
-  if (code) {
-    filters.code = {
-      contains: String(code),
-    };
-  }
 
   if (description) {
     filters.description = {
@@ -276,12 +267,6 @@ export const findAllReport = async (req: Request, res: Response) => {
   if (status) {
     filters.status = {
       equals: String(status),
-    };
-  }
-
-  if (userId) {
-    filters.userId = {
-      equals: Number(userId),
     };
   }
 
@@ -318,6 +303,12 @@ export const findAllReport = async (req: Request, res: Response) => {
   if (countryReport) {
     filters.countryReport = {
       contains: String(countryReport),
+    };
+  }
+
+  if(titleReport){
+    filters.titleReport = {
+      contains: String(titleReport),
     };
   }
 
