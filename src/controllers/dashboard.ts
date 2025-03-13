@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { prismaCilent } from "..";
-import { NotFoundException } from "../exceptions/not-found";
-import { ErrorCode } from "../exceptions/root";
 
 export const getDashboardData = async (req: Request, res: Response) => {
     try {
