@@ -261,6 +261,7 @@ export const findAllReport = async (req: Request, res: Response) => {
   if (description) {
     filters.description = {
       contains: String(description),
+      mode: 'insensitive',
     };
   }
 
@@ -273,6 +274,7 @@ export const findAllReport = async (req: Request, res: Response) => {
   if (reporterName) {
     filters.reporterName = {
       contains: String(reporterName),
+      mode: 'insensitive',
     };
   }
 
@@ -285,30 +287,35 @@ export const findAllReport = async (req: Request, res: Response) => {
   if (addressReport) {
     filters.addressReport = {
       contains: String(addressReport),
+      mode: 'insensitive',
     };
   }
 
   if (cityReport) {
     filters.cityReport = {
       contains: String(cityReport),
+      mode: 'insensitive',
     };
   }
 
   if (UFReport) {
     filters.UFReport = {
       contains: String(UFReport),
+      mode: 'insensitive',
     };
   }
 
   if (countryReport) {
     filters.countryReport = {
       contains: String(countryReport),
+      mode: 'insensitive',
     };
   }
 
   if(titleReport){
     filters.titleReport = {
       contains: String(titleReport),
+      mode: 'insensitive',
     };
   }
 

@@ -160,6 +160,7 @@ export const findAllOccurrence = async (req: Request, res: Response) => {
     if (description) {
         filters.description = {
             contains: String(description),
+            mode: 'insensitive',
         };
     }
 
@@ -184,6 +185,7 @@ export const findAllOccurrence = async (req: Request, res: Response) => {
     if(title){
         filters.title = {
             contains: String(title),
+            mode: 'insensitive',
         };
     }
 
@@ -221,6 +223,7 @@ export const findAllOccurrencePublic = async (req: Request, res: Response) => {
     if (description) {
         filters.description = {
             contains: String(description),
+            mode: 'insensitive',
         };
     }
 
@@ -233,6 +236,7 @@ export const findAllOccurrencePublic = async (req: Request, res: Response) => {
     if (title) {
         filters.title = {
             contains: String(title),
+            mode: 'insensitive',
         };
     }
 
