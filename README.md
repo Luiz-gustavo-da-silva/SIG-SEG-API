@@ -61,5 +61,8 @@ Certifique-se de ter instalado em sua máquina:
 
 ## Rotas 
 
-![Rotas](assets/docsapi.png);
+![Rotas](assets/docsapi.png)
+
+
+link da docs com o projeto local:  http://localhost:3000/api-docs/
 
