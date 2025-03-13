@@ -11,7 +11,6 @@ reportRoutes.put('/update', [authMiddleware], errorHandler(updateReport))
 reportRoutes.get('/public/:code', errorHandler(findReport))
 reportRoutes.get('/simple', [authMiddleware], errorHandler(findAllReportSimple))
 reportRoutes.get('/complet', [authMiddleware], errorHandler(findAllReportSimpleComplet))
-
 reportRoutes.get('/', [authMiddleware], errorHandler(findAllReport))
 
 
