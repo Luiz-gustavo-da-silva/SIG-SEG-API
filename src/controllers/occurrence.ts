@@ -78,18 +78,18 @@ export const deleteOccurrence = async (req: Request, res: Response) => {
             where: { id: occurrenceId },
         });
 
-        res.status(204).json(deletedOccurrence);
+        res.status(200).json(deletedOccurrence);
     } catch (error) {
         res.status(500).json({ error: "Erro ao deletar a Ocorrência!" });
     }
 };
 
 export const updateOccurrence = async (req: Request, res: Response) => {
-    const { occurrenceId, description, status, userId, reportId, title } = req.body;
+    const { id, description, status, userId, reportId, title } = req.body;
 
     try {
         const existingOccurrence = await prismaCilent.occurrence.findUnique({
-            where: { id: occurrenceId },
+            where: { id: id },
         });
 
         if (!existingOccurrence) {
@@ -121,8 +121,22 @@ export const updateOccurrence = async (req: Request, res: Response) => {
             );
         }
 
+        await prismaCilent.report.update({
+            where: { id: existingOccurrence.reportId },
+            data: {
+                status: "PENDING",
+            },
+        });
+
+        await prismaCilent.report.update({
+            where: { id: reportId },
+            data: {
+                status: "CONVERTED_TO_OCCURRENCE",
+            },
+        });
+
         const updatedOccurrence = await prismaCilent.occurrence.update({
-            where: { id: occurrenceId },
+            where: { id: id },
             data: {
                 description,
                 status,

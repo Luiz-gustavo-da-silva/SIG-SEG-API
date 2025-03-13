@@ -358,3 +358,23 @@ export const findAllReportSimple = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Erro ao buscar denúncias." });
   }
 };
+
+
+export const findAllReportSimpleComplet = async (req: Request, res: Response) => {
+  try {
+    const reports = await prismaCilent.report.findMany({
+      select: {
+        id: true,
+        titleReport: true,
+      },
+    });
+
+    console.log(reports)
+
+    res.json({
+      data: reports,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar denúncias." });
+  }
+};

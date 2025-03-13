@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createReport, deleteReport, updateReport, findAllReport, findAllReportPublic, findReport, findAllReportSimple } from '../controllers/report'
+import { createReport, deleteReport, updateReport, findAllReport, findAllReportPublic, findReport, findAllReportSimple, findAllReportSimpleComplet } from '../controllers/report'
 import { errorHandler } from '../error-handler'
 import authMiddleware from '../middlewares/auth'
 
@@ -10,6 +10,7 @@ reportRoutes.delete('/:id', [authMiddleware], errorHandler(deleteReport))
 reportRoutes.put('/update', [authMiddleware], errorHandler(updateReport))
 reportRoutes.get('/public/:code', errorHandler(findReport))
 reportRoutes.get('/simple', [authMiddleware], errorHandler(findAllReportSimple))
+reportRoutes.get('/complet', [authMiddleware], errorHandler(findAllReportSimpleComplet))
 
 //reportRoutes.get('/public', errorHandler(findAllReportPublic))
 
