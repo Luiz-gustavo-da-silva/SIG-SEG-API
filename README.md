@@ -66,3 +66,10 @@ Certifique-se de ter instalado em sua máquina:
 
 link da docs com o projeto local:  http://localhost:3000/api-docs/
 
+# Vídeo com demonstração
+
+https://drive.google.com/file/d/1E8YJd2j7ZT5mfNwFWAVWjOBa5qPKe8Z3/view?usp=sharing
+
+# Link do front
+
+https://github.com/Luiz-gustavo-da-silva/sigsegfront
